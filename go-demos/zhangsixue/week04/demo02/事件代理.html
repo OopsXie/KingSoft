@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      li {
+        background-color: blue;
+        margin-top: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+  </body>
+  <script>
+    window.onload = function () {
+      const root = document.getElementById("root");
+      const list = document.createElement("ul");
+      for (let i = 0; i < 10; i++) {
+        const item = document.createElement("li");
+        item.innerText = i;
+        list.appendChild(item);
+      }
+      list.onclick = function (e) {
+        //
+        alert(e.target.innerText);
+      };
+      root.appendChild(list);
+    };
+  </script>
+</html>

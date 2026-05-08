@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>SPA History Mode Example</title>
+  <script>
+    // 定义不同页面的内容
+    const pages = {
+      home: '<h1>Home Page</h1>',
+      about: '<h1>About Page</h1>',
+      contact: '<h1>Contact Page</h1>'
+    };
+    
+    // 路由处理函数
+    function handleRoute() {
+      const path = window.location.pathname;
+      let content = pages.home; // 默认为首页
+    
+      if (path === '/about') {
+        content = pages.about;
+      } else if (path === '/contact') {
+        content = pages.contact;
+      }
+    
+      // 将内容渲染到页面中
+      document.getElementById('content').innerHTML = content;
+    }
+    
+    // 导航函数
+    function navigate(path) {
+      window.history.pushState(null, null, path);
+      handleRoute();
+    }
+    
+    // 监听浏览器的 popstate 事件
+    window.addEventListener('popstate', handleRoute);
+  </script>
+</head>
+<body>
+  <nav>
+    <ul>
+      <li><a href="/" onclick="navigate('/'); return false;">Home</a></li>
+      <li><a href="/about" onclick="navigate('/about'); return false;">About</a></li>
+      <li><a href="/contact" onclick="navigate('/contact'); return false;">Contact</a></li>
+    </ul>
+  </nav>
+  
+  <div id="content">
+    <!-- 内容将在此处动态渲染 -->
+  </div>
+ = content;
+    }
+    
+    // 导航函数
+    function navigate(path) {
+      window.history.pushState(null, null, path);
+      handleRoute();
+    }
+    
+    // 监听浏览器的 popstate 事件
+    window.addEventListener('popstate', handleRoute);
+  </script>
+</body>
+</html>

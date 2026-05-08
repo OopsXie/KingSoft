@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .hello {
+        color: red;
+        font-size: 20px;
+        background-color: antiquewhite;
+      }
+
+      .hello2 {
+        color: green;
+      }
+
+      .border {
+        border: solid 1px red;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="hello border">Hello red</div>
+    <div class="hello2">Hello 22 first</div>
+
+    <div id="c1" class="container">
+      <div class="hello2">Hello 22</div>
+      <div class="hello3">Hello333</div>
+    </div>
+
+    <div class="hello2">Hello 22 outside</div>
+
+    <input type="checkbox" id="cbx" onchange="changeButtonDisalbe()" />
+
+    <button id="btn1" disabled onclick="changeColor()">change color</button>
+
+    <input type="search" placeholder="请输入文本进行搜索" readonly />
+
+    <button onclick="genDivs()">Gen div</button>
+
+    <script>
+      function changeColor() {
+        document.querySelector(".hello").style.color = "blue";
+      }
+
+      function changeButtonDisalbe() {
+        console.log(
+          "changeButtonDisalbe",
+          document.getElementById("cbx").checked
+        );
+        document.getElementById("btn1").disabled =
+          !document.getElementById("cbx").checked;
+      }
+
+      function genDivs() {
+        const div = document.createElement("div");
+        div.innerHTML = "New div with .hello2<b>bold</b>";
+        // div.innerText = "New div with .hello2<b>bold</b>";
+
+        div.classList.add("hello2");
+
+        document.querySelector(".container").appendChild(div);
+      }
+    </script>
+  </body>
+</html>

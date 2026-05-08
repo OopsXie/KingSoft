@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SPA Hash Mode Example</title>
+</head>
+<body>
+    <ul>
+        <a href="#home">home</a>
+        <a href="#about">about</a>
+        <a href="#contact">contact</a>
+    </ul>
+    <div id="container"></div>
+</body>
+<script>
+        // 定义不同页面的内容
+    const pages = {
+      home: '<h1>Home Page</h1>',
+      about: '<h1>About Page</h1>',
+      contact: '<h1>Contact Page</h1>'
+    };
+    const hash = location.hash
+    function render(hash){
+        hash = hash.replace(/^#/,'')
+        const container = document.querySelector("#container")
+        container.innerHTML =  pages[hash]
+        console.log('render',hash)
+    }
+    render(hash)
+    window.addEventListener('hashchange',function(){
+        console.log(location.hash)
+        render(location.hash)
+    })
+
+</script>
+</html>

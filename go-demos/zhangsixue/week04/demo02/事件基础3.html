@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .clickDom {
+        background-color: blue;
+      }
+    </style>
+    <script>
+      function clickEvent1(e) {
+        console.log("clickEvent1", e);
+        alert("1");
+      }
+
+      function clickEvent2(e) {
+        console.log("clickEvent2", e);
+        alert("2");
+      }
+      // 添加事件
+      function addEventforClick() {
+        console.log("Load", new Date());
+
+        document
+          .querySelector(".clickDom")
+          .addEventListener("click", clickEvent2);
+      }
+
+      function domContentLoaded() {
+        console.log("domContentLoaded", new Date());
+      }
+      //给window添加事件
+      window.addEventListener("load", addEventforClick);
+
+      document.addEventListener("DOMContentLoaded", domContentLoaded);
+    </script>
+  </head>
+  <body>
+    <button onclick="clickEvent1()">Click 1</button>
+
+    <div class="clickDom">
+      <button>Click 2</button>
+      <span>This is span<b>Bold</b></span>
+    </div>
+  </body>
+</html>

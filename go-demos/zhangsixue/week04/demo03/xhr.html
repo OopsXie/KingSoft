@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>xhr</title>
+  </head>
+  <body>
+    f12打开devtool
+  </body>
+  <script>
+    // 基于GET请求进行演示
+    function get(url) {
+      return new Promise((resolve) => {
+        const xhr = new XMLHttpRequest();
+        // xhr.setRequestHeader()
+        xhr.onload = () => {
+          // console.log(xhr.status, xhr.statusText, xhr.response);
+          // 只有当返回值是json格式才这么解析
+          resolve(JSON.parse(xhr.response));
+        };
+        xhr.open("GET", url);
+        // send 可以传入body
+        xhr.send();
+      });
+    }
+    async function getAreas() {
+      const data = await get("./data/areas.json");
+      console.log(data);
+    }
+    async function getAlbums() {
+      const data = await get("./data/albums.json");
+      console.log(data);
+    }
+    getAreas();
+    getAlbums();
+
+    // 使用 fetch
+    async function get_fetch(url) {
+      const res = await fetch(url, {
+        method: "GET",
+        // body
+        // headers
+      });
+      // 返回值是json才这么解析
+      const data = await res.json();
+      return data;
+    }
+    async function getAreas_fetch() {
+      const data = await get_fetch("./data/areas.json");
+      console.log(data);
+    }
+    async function getAlbums_fetch() {
+      const data = await get_fetch("./data/albums.json");
+      console.log(data);
+    }
+
+    // getAreas_fetch();
+    // getAlbums_fetch();
+
+    const pAll = Promise.all([
+      get_fetch("./data/areas.json"),
+      get_fetch("./data/albums.json"),
+    ]);
+
+    //可以被async await替代
+    pAll.then(function (rets) {
+      console.log("all done", rets);
+    });
+
+    async function testAll() {
+      const rets = await Promise.all([
+        get_fetch("./data/areas.json"),
+        get_fetch("./data/albums.json"),
+      ]);
+      console.log("ret", rets);
+    }
+    testAll();
+  </script>
+</html>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>form</title>
+
+    <script>
+      function cbxAlert() {
+        console.log("cbxAlert", this);
+        alert("2");
+      }
+
+      function cbxAlert2() {
+        alert("22");
+      }
+
+      function cancelCbx(e) {
+        this.setAttribute("disabled", "disabled");
+        cbx.removeEventListener("change", cbxAlert);
+      }
+
+      function preventDefault1(e) {
+        e.preventDefault();
+      }
+      function init() {
+        console.log("this");
+        let cbx = document.querySelector("#cbx");
+        cbx.checked = false;
+
+        cbx.addEventListener("change", cbxAlert);
+
+        cbx.addEventListener("change", cbxAlert2);
+
+        document
+          .querySelector("#btnCancel")
+          .addEventListener("click", cancelCbx);
+
+        document
+          .querySelector("#cbx2")
+          .addEventListener("click", preventDefault1);
+
+        //阻止默认行为
+        document
+          .querySelector("#aLink")
+          .addEventListener("click", preventDefault1);
+
+        document.querySelector("#cbx2").addEventListener("click", cbxAlert2);
+      }
+
+      document.addEventListener("DOMContentLoaded", init);
+
+      window.addEventListener("load", function () {
+        console.log("load");
+      });
+    </script>
+  </head>
+  <body>
+    <input type="text" placeholder="请输入你的用户名" readonly />
+
+    <input type="checkbox" id="cbx" checked />
+
+    <label for="cbx">是否上课#cbx</label>
+
+    <input type="radio" id="rbtn" />
+    <label for="rbtn">是否上课#rbtn</label>
+
+    <button id="btnCancel">取消cbx事件#btnCancel</button>
+
+    <div>
+      <input type="checkbox" checked id="cbx2" />
+      <label for="cbx2">是否上课#cbx2</label>
+    </div>
+
+    <div>
+      <a id="aLink" href="https://www.wps.cn" target="_blank"
+        >http://www.wps.cn</a
+      >
+    </div>
+  </body>
+</html>

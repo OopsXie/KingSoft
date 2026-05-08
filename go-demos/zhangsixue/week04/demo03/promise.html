@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script>
+      //q:简单的写一个promise的例子。
+      function asyncArea(length) {
+        return new Promise((resolve, reject) => {
+          setTimeout(() => {
+            if (length > 0) resolve(length * length);
+            else reject(new Error(`invalid length: ${length}`));
+          }, 500);
+        });
+      }
+
+      function asyncSum(length) {
+        return new Promise((resolve, reject) => {
+          setTimeout(() => {
+            if (length > 0) resolve((length * (length + 1)) / 2);
+            else reject(new Error(`invalid length: ${length}`));
+          }, 500 * length);
+        });
+      }
+
+      function asyncFun1(num) {
+        return new Promise(function (res, rej) {
+          //实现逻辑分发
+          if (num > 0) {
+            res(num + 1);
+          } else {
+            rej("num小于0");
+          }
+        });
+      }
+
+      asyncArea("a")
+        .then(asyncSum)
+        .then(asyncArea)
+        .then(asyncFun1)
+        .then(function (res) {
+          console.log("res", res);
+        })
+        .catch(function (e) {
+          console.log("error", e);
+        });
+
+      async function MyPromise() {
+        //计算面积
+        const area1 = await asyncArea(5);
+        const sum1 = await asyncSum(area1);
+        const sum2 = await asyncFun1(sum1);
+
+        console.log(sum1);
+      }
+
+      async function MyAllPromise() {
+        //计算面积
+        const area1 = await asyncArea(1);
+        const area2 = await asyncArea(2);
+        const area3 = await asyncArea(3);
+
+        const allAreas = await Promise.all([area1, area2, area3]);
+        console.log(allAreas);
+        // Promise.all([area1, area2, area3]).then((res) => {
+        //   console.log("All area calc done:", res);
+        // });
+      }
+
+      // MyAllPromise();
+    </script>
+  </head>
+  <body></body>
+</html>

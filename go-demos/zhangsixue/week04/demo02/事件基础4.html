@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script>
+      function btnClick(e) {
+        CBX.checked = !CBX.checked;
+        console.log("this", this);
+      }
+
+      let btnClick2 = function () {
+        document.querySelector("#btn1").removeEventListener("click", btnClick);
+      };
+      let CBX;
+      function init() {
+
+        document.addEventListener("click",()=>{
+            // console.log("e",arguments)
+        })
+        CBX = document.querySelector("#cbx1");
+        document.querySelector("#btn1").addEventListener("click", btnClick);
+        document.querySelector("#btn2").addEventListener("click", btnClick2);
+      }
+      document.addEventListener("DOMContentLoaded", init);
+    </script>
+  </head>
+  <body>
+    <input type="checkbox" id="cbx1" /><label for="cbx1">加入金山</label>
+    <button id="btn1">Toggle checkbox</button>
+    <button id="btn2">Removeevent</button>
+
+    <div>hello</div>
+  </body>
+</html>

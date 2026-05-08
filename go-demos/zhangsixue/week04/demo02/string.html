@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>string</title>
+  </head>
+  <body>
+    f12打开devtool
+  </body>
+  <script>
+    /**
+     * substring
+     * 该方法返回一个字符串在开始索引到结束索引之间的一个子集，
+     * 或者从开始索引到字符串末尾的一个子集。
+     */
+    let str1 = "0123456789";
+    console.log(str1.substring(0, 3)); // '012'
+    console.log(str1.substring(3, 6)); // '345'
+    console.log(str1.substring(0, -3)); // 相当于 str.substring(0, 0)，输出为空字符串
+    /**
+     * slice
+     * 与substring 类似，不同的是slice的参数可以是负数
+     */
+    let str2 = "0123456789";
+    console.log(str2.slice(0, 3)); // '012'
+    console.log(str2.slice(3, 6)); // '345'
+    console.log(str2.slice(0, -3)); // '0123456'，表示从第0各字符提取到倒数第三个字符
+    console.log(str2.slice(-3, -1)); // '78'
+    /**
+     * include
+     * 用于判断一个字符串是否包含在另一个字符串中，根据情况返回true或者false
+     */
+    let str3 = "0123456789";
+    console.log(str3.includes("123")); // true
+    console.log(str3.includes("123", 4)); // false
+    /**
+     * startsWith/endsWith
+     * 用来判断当前字符串是否以另外一个给定的子字符串开头/结尾，并根据判断结果返回 true 或 false
+     */
+    let str4 = "0123456789";
+    console.log(str4.startsWith("0123")); // true
+    console.log(str4.startsWith("1234")); // false
+    console.log(str4.startsWith("1234", 1)); // true
+    console.log(str4.endsWith("789")); // true
+    console.log(str4.endsWith("456", 7)); // true，相当于判断 '0123456'.endsWith('456)
+    /**
+     * repeat
+     * 返回一个新字符串，表示将原字符串重复 n 次
+     */
+    console.log("abc".repeat(2)); // 'abcabc'
+    /**
+     * padStart/padEnd
+     * 这两个方法提供了字符串补全长度的功能，如果某个字符串不够指定的长度，会在头部或者尾部补全，
+     * padStart 用于头部补全，padEnd 用于尾部补全，这个在格式化字符串的时候非常有用
+     */
+    console.log("5".padStart(5, "0")); // '00005'
+    console.log("123".padEnd(5)); // '123  '，默认使用空格补全
+    console.log("12345".padStart(4)); // '12345'，超出长度，不会变化
+    /**
+     * trim/trimStart/trimEnd
+     * 这三个方法的作用类似
+     * trim 用来消除字符串首尾的空格，trimStart 用来消除字符串头部的空格，trimEnd 用来消除字符串尾部的空格
+     * 他们返回的都是新字符串，不会改变原值
+     */
+    let str5 = "  abc  ";
+    console.log(str5.trim()); // 'abc'
+    console.log(str5.trimStart()); // 'abc  '
+    console.log(str5.trimEnd()); // '  abc'
+    /**
+     * replaseAll
+     * 以前js的字符串替换方法 replace 只会替换第一个匹配，如果想要替换所有的匹配，需要写正则表达式
+     */
+    console.log("aabbcc".replace("b", "_")); // 'aa_bcc'
+    console.log("aabbcc".replace(/b/g, "_")); // 'aa__cc'
+    // 正则增加了复杂度
+    console.log("aabbcc".replaceAll("b", "_")); // 'aa__cc'
+    /**
+     * split
+     * 该方法使用指定的分割字符将一个字符串分割成子字符串数组，以一个指定的分割字符串来决定每个拆分的位置
+     */
+    console.log("Hello JavaScript".split(" ")); // [ 'Hello', 'JavaScript' ]
+    console.log("Hello".split("")); // [ 'H', 'e', 'l', 'l', 'o' ]
+  </script>
+</html>

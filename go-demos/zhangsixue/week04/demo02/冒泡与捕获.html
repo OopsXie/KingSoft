@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>事件捕获&冒泡</title>
+    <style>
+      #main p {
+        background-color: red;
+      }
+      #main div {
+        background-color: blue;
+        padding: 20px;
+        margin: 20px;
+      }
+      pre {
+        background-color: antiquewhite;
+        border: solid 1px #eee;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="main">
+      <div onclick="alert('You click DIV')">
+        <p onclick="clickFunction(event)">TAG P1:click me!</p>
+      </div>
+      <div id="div">
+        <p id="p">TAG P2:click me!</p>
+      </div>
+    </div>
+    <p>红色是P，蓝色是DIV</p>
+
+    <pre id="code"></pre>
+    <script id="s1">
+      function clickFunction(e) {
+        alert("You click P");
+        console.log(e);
+        e.stopPropagation();
+      }
+      function onDivClick(e) {
+        alert("div p2");
+        console.log(e, this);
+        // e.stopPropagation();
+      }
+      function onPClick(e) {
+        //e：MouseEvent
+        alert("You click P2");
+      }
+      const div = document.querySelector("#div");
+      const p = document.querySelector("#p");
+      //capture:default is false. if true, the event handler is executed in the capturing phase
+      div.addEventListener("click", onDivClick, true);
+      p.addEventListener("click", onPClick);
+    </script>
+  </body>
+
+  <script>
+    document.querySelector("#code").innerHTML =
+      document.querySelector("#s1").innerHTML;
+  </script>
+</html>

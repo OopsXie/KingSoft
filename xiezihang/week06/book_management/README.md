@@ -1,0 +1,7 @@
+- 定义结构体和接口
+- 实现接口方法
+- 实现 Library 结构体的方法
+- 获取可借阅资源方法
+- GetAvailableBooks 方法：遍历 Books 切片，将所有 IsAvailable 为 true 的书籍添加到一个新的切片中并返回。
+- GetAvailableMagazines 方法：遍历 Magazines 切片，将所有 IsAvailable 为 true 的杂志添加到一个新的切片中并返回。
+- 主函数演示

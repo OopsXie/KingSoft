@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Storage</title>
+  </head>
+  <body>
+    f12打开devtool
+    <article>
+      <h1>Storage</h1>
+      <section>
+        <p>
+          Web Storage API
+          提供了存储机制，通过该机制，浏览器可以安全地存储键值对，作为
+          WebStorage API
+          的接口，Storage提供了访问特定域名下的会话存储或本地存储的功能，例如，可以添加、修改或删除存储的数据项。存储对象是简单的键值存储，类似于对象，但是他们在页面加载时保持完整，键和值始终是字符串（数字、布尔型、对象都会被自动转换为字符串）
+        </p>
+        <p>它包含两种机制:</p>
+        <ul>
+          <li>sessionStorage</li>
+          <li>localStorage</li>
+        </ul>
+        <p>它们都有相同的api，只是一些特性不一样</p>
+      </section>
+      <h2>sessionStorage</h2>
+      <section>
+        <p>
+          sessionStorage
+          为每一个给定的源位置一个独立的存储区域，该存储区域在页面会话期间可用
+        </p>
+        <ul>
+          <li>
+            页面会话在浏览器打开期间一直保持，并且重新加载或者恢复页面仍会保持原来的会话
+          </li>
+          <li>打开多个相同URL的Tabs页面，会创建各自的 sessionStorage</li>
+          <li>关闭对应的浏览器窗口、tab，会清除对应的 sessionStorage</li>
+        </ul>
+      </section>
+      <h2>localStorage</h2>
+      <section>
+        <p>
+          功能与 sessionStorage
+          相同，但是在浏览器关闭，重新打开之后数据仍然可用，可以用来做缓存数据的持久化
+        </p>
+      </section>
+    </article>
+  </body>
+  <script>
+    sessionStorage.setItem("arr", JSON.stringify([1, 2, 3]));
+    sessionStorage.setItem("obj", JSON.stringify({ x: 1 }));
+    console.log(sessionStorage.length);
+    console.log(sessionStorage.key(0)); // 该方法接受一个数值n作为参数，并返回存储中第n个键名
+    console.log(sessionStorage.getItem("arr"));
+    console.log(sessionStorage.removeItem("arr"));
+    console.log(sessionStorage.getItem("arr"));
+    sessionStorage.clear();
+    console.log(sessionStorage.length);
+
+    localStorage.setItem("arr", JSON.stringify([1, 2, 3]));
+    localStorage.setItem("obj", JSON.stringify({ x: 1 }));
+    console.log(localStorage.length);
+    console.log(localStorage.key(0)); // 该方法接受一个数值n作为参数，并返回存储中第n个键名
+    console.log(localStorage.getItem("arr"));
+    console.log(localStorage.removeItem("arr"));
+    console.log(localStorage.getItem("arr"));
+    localStorage.clear();
+    console.log(localStorage.length);
+  </script>
+</html>

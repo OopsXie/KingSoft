@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>function</title>
+  </head>
+  <body>
+    f12打开devtool
+  </body>
+  <script>
+    const test = function () {
+      console.log("hello world!");
+    };
+    test();
+    function sayHello() {
+      return function () {
+        console.log("hello");
+      };
+    }
+    sayHello()();
+    (function (name) {
+      console.log("hello ", name);
+    })("Bob");
+    // 闭包
+    let a = 1;
+    function test3() {
+      a++;
+    }
+  </script>
+</html>

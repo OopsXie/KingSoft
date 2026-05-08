@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+
+    <style>
+      .div_blue {
+        color: blue;
+      }
+    </style>
+  </head>
+  <body>
+    <a href="qq.com">qq.com</a>
+    <div a="111" class="div_blue" id="div1">
+      this is div1 <a href="qq.com">qq.com</a>
+    </div>
+
+    <button onclick="getTxt()">getTxt</button>
+
+    <button onclick="changeColor()">change color</button>
+
+    <button onclick="createDom()">create a p</button>
+
+    <button onclick="deleteDom()">delete a</button>
+
+    <article>dsafsdf</article>
+
+    <div>
+
+        <p>
+
+            dfasdfasdfa
+            <p></p>
+        </p>
+
+        <span>
+            <p></p>
+        </span>
+    </div>
+
+    <script>
+      function deleteDom() {
+        let aTag = document.querySelector("a");
+        document.querySelector("#div1").removeChild(aTag);
+      }
+      function createDom() {
+        let p = document.createElement("p");
+
+        p.innerHTML = '<img src="xxx.png" />  <a href="wps.cn">wps.cn</a>';
+
+        document.querySelector("#div1").appendChild(p);
+      }
+
+      function getTxt() {
+        let myDiv = document.querySelector(".div_blue a");
+
+        alert(myDiv.innerHTML);
+      }
+
+      function changeColor() {
+        let myDiv = document.getElementById("div1");
+
+        myDiv.style.color = "red";
+        myDiv.innerText = "new text";
+      }
+    </script>
+  </body>
+</html>

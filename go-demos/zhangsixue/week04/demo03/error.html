@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>error</title>
+  </head>
+  <body>
+    f12打开devtool
+  </body>
+  <script>
+    // 异常与异常处理是代码中必不可少的一环
+
+    // Error是 JS 一个内置对象。有一个属性message，可以在创建实例时，通过构造函数传入。
+    const error = new Error("error message");
+    console.log(error.message);
+
+    // 一般都会基于自身需求对Error进行封装
+    class Exception extends Error {
+      constructor(name, message) {
+        super(message);
+        this.name = name;
+      }
+    }
+
+    // throw 语法
+    // 用于抛出异常，可以在程序运行中使用该语法抛出异常，直至抛出异常被处理；
+    // 若异常未被处理则会中止正常程序运行。
+    try {
+      const flag = false;
+      if (!flag) {
+        throw new Exception("error", "error message");
+      }
+    } catch (error) {
+      if (error instanceof Exception) {
+        console.log(error.name, error.message);
+      }
+    }
+  </script>
+</html>

@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>basic</title>
+  </head>
+  <body>
+    f12打开devtool
+  </body>
+  <script>
+    // var let const
+    // console.log(a);
+    // var a = 10;
+    // console.log(a);
+    // console.log(b);
+    // let b = 10;
+    // console.log(b);
+    // const c = 10;
+    // console.log(c);
+    c = 11;
+
+    // 类型
+    const str = "thisisstring";
+    const num = 12;
+    const bool = false;
+    const arr = [1, false, "s"];
+    const obj = { name: "Bob", age: 10 };
+
+    // 值的引用与传递
+    let num1 = 3;
+    let num2 = num1;
+    num1++;
+    console.log(num1, num2);
+
+    let obj1 = { x: 1, y: 2 };
+    let obj2 = obj1;
+    obj2.x = 2;
+    console.log(obj1, obj2);
+    // obj2指向新的地址
+    obj2 = { x: 1 };
+
+    function test1(obj, num, str) {
+      obj.x = 2;
+      num = 2;
+      str = "test";
+      obj = { z: 222 };
+    }
+    let obj3 = { x: 4 };
+    let num3 = 10;
+    let str1 = "12";
+    test1(obj3, num3, str1);
+    console.log(obj3, num3, str1);
+
+    // get set
+    let _age = 10;
+    const obj4 = {
+      name: "Bob",
+      get age() {
+        console.log("正在读取age属性");
+        return _age;
+      },
+      set age(val) {
+        console.log("正在设置age属性");
+        _age = val;
+      },
+    };
+    obj4.age = 20;
+    console.log(obj4.age);
+
+    // Object.defineProperty()
+    const obj5 = {};
+    Object.defineProperty(obj5, "newKey", {
+      value: 20,
+      writable: true,
+    });
+    console.log("obj5", obj5);
+    obj5.newKey = 200;
+    console.log("obj5", obj5);
+    Object.defineProperty(obj5, "newKey1", {
+      value: 20,
+      writable: false,
+    });
+    console.log("obj5", obj5);
+    obj5.newKey1 = 200;
+    console.log("obj5", obj5);
+    Object.defineProperties(obj5, {
+      a: {
+        value: 10,
+      },
+      b: {
+        value: false,
+        writable: false,
+      },
+    });
+    console.log("obj5", obj5);
+
+    // Proxy
+    const obj6 = {};
+    const obj6_proxy = new Proxy(obj6, {
+      get: function (obj, prop) {
+        if (prop in obj) {
+          return obj[prop];
+        } else {
+          obj[prop] = undefined;
+        }
+      },
+      set: function (obj, prop, val) {
+        obj[prop] = val;
+      },
+    });
+    console.log(obj6_proxy.val);
+    obj6_proxy.val = 20;
+    console.log(obj6_proxy.val);
+    console.log(obj6);
+
+    // 程序控制语句
+    if (true) {
+      console.log(true);
+    }
+    const num4 = 0;
+    if (num4) {
+      console.log(num4, 1);
+    } else if (!!num4) {
+      console.log(num4, 2);
+    } else if (num4 === "0") {
+      console.log(num4, 3);
+    } else {
+      console.log(num4, 4);
+    }
+    try {
+      num4++;
+    } catch (err) {
+      console.log(err);
+    } finally {
+      console.log("try catch finally");
+    }
+    const obj7 = {
+      x: 1,
+      y: 2,
+    };
+    for (const key in obj7) {
+      console.log(key);
+    }
+    const arr1 = [1, 2, 3];
+    for (const item of arr1) {
+      console.log(item);
+    }
+    for (const key in arr1) {
+      console.log(key);
+    }
+  </script>
+</html>

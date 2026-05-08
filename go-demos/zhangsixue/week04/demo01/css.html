@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flex</title>
+</head>
+<style>
+    body {
+        margin:1px;
+        padding:0;
+    }
+    .container {
+        width: 100%;
+        border: 1px solid #000;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+    }
+    header {
+        background-color: #f1c40f;
+        height: 100px;
+    }
+    main {
+        background-color: green;
+        flex-grow: 1;
+        display: flex;
+    }
+    footer {
+        background-color: blue;
+        height: 40px;
+    }
+.left{
+    background-color: red;
+    width: 200px;
+    flex-basis: 200px;
+    flex-grow: 0;
+    flex-shrink: 0;
+    height: 100%;
+
+}
+.center {
+    background-color:aqua;
+    flex-grow: 1;
+}
+.right{
+    background-color:#f1c40f;
+    width: 120px;
+}
+@media screen   and (max-width: 768px){
+    .right {
+        display: none;
+    }
+}
+</style>
+<body>
+    
+    <div class="container">
+       <header></header>
+       <main>
+        <div class="left"></div>
+        <div class="center"></div>
+        <div class="right"></div>
+
+       </main>
+       <footer></footer>
+    </div>
+</body>
+</html>

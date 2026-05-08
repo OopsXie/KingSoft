@@ -1,0 +1,126 @@
+import { useState } from 'react';
+import { Form, Input, Button, message, Card } from 'antd';
+import { MailOutlined, LockOutlined } from '@ant-design/icons';
+import { useNavigate, Link } from 'react-router-dom';
+import api from '../utils/api';
+import type { ApiResponse } from '../utils/api';
+
+interface LoginResponse {
+  token_type: string;
+  expires_in: number;
+}
+
+interface LoginParams {
+  email: string;
+  password: string;
+}
+
+function Login() {
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
+
+  const onFinish = async (values: LoginParams) => {
+    try {
+      setLoading(true);
+      // 调用登录接口
+      const response = await api.post<ApiResponse<LoginResponse>>('/auth/login', values);
+      
+      if (response.data.code === 0) {
+        // 登录成功后只需存储用户信息，token已经在Cookie中了
+        localStorage.setItem('userInfo', JSON.stringify({
+          email: values.email
+        }));
+        
+        message.success('登录成功');
+        navigate('/');
+      } else {
+        message.error(response.data.msg || '登录失败');
+      }
+    } catch (error) {
+      console.error('登录失败:', error);
+      message.error('登录失败，请检查邮箱和密码');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <div className="flex items-center justify-center min-h-screen bg-gradient-to-r from-blue-50 to-indigo-100">
+      <div className="w-full max-w-xs mx-auto">
+        <div className="text-center mb-6">
+          <h1 className="text-3xl font-bold text-indigo-700">Go Web MVC 系统</h1>
+          <p className="text-gray-600 mt-2">请登录以继续使用</p>
+        </div>
+        
+        <Card className="w-full shadow-lg rounded-lg border-0" style={{ maxWidth: '360px', margin: '0 auto' }}>
+          <h2 className="text-center text-2xl font-semibold mb-2 text-gray-700">用户登录</h2>
+          <p className="text-center text-sm text-gray-500 mb-6 px-1 leading-relaxed">
+            请使用<strong className="text-gray-700 font-medium">注册邮箱</strong>登录（不支持用户名）
+          </p>
+          <Form
+            name="login"
+            initialValues={{ remember: true }}
+            onFinish={onFinish}
+            layout="vertical"
+            size="large"
+            style={{ maxWidth: '320px', margin: '0 auto' }}
+          >
+            <Form.Item
+              label={<span className="text-gray-700 font-medium">邮箱</span>}
+              name="email"
+              rules={[
+                { required: true, message: '请输入邮箱' },
+                { type: 'email', message: '请输入有效的邮箱地址' }
+              ]}
+            >
+              <Input
+                prefix={<MailOutlined className="text-gray-400" />}
+                placeholder="例如：zhangsan@example.com"
+                autoComplete="email"
+                inputMode="email"
+                className="rounded-md"
+                style={{ width: '100%' }}
+              />
+            </Form.Item>
+            <Form.Item
+              label={<span className="text-gray-700 font-medium">密码</span>}
+              name="password"
+              rules={[{ required: true, message: '请输入密码' }]}
+            >
+              <Input.Password
+                prefix={<LockOutlined className="text-gray-400" />}
+                placeholder="请输入登录密码"
+                autoComplete="current-password"
+                className="rounded-md"
+                style={{ width: '100%' }}
+              />
+            </Form.Item>
+            <Form.Item className="mt-6">
+              <Button 
+                type="primary" 
+                htmlType="submit" 
+                loading={loading} 
+                block
+                className="h-10 bg-indigo-600 hover:bg-indigo-700 border-0 rounded-md"
+              >
+                登录
+              </Button>
+            </Form.Item>
+            
+            <div className="text-center">
+              <Link to="/register" className="text-indigo-600 hover:text-indigo-800">
+                没有账号？立即注册
+              </Link>
+            </div>
+          </Form>
+        </Card>
+        
+        <div className="text-center mt-6 text-gray-500 text-sm">
+          © {new Date().getFullYear()} Go Web MVC 系统 版权所有
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default Login; 

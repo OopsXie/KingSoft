@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <title>Todo List</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      padding: 20px;
+      transition: background-color 0.3s, color 0.3s;
+    }
+
+    body.light {
+      background-color: #ffffff;
+      color: #000000;
+    }
+
+    body.dark {
+      background-color: #121212;
+      color: #f0f0f0;
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 48px;
+      color: #4A90E2;
+      text-shadow: 2px 2px 6px #aaa;
+    }
+
+    .input-container {
+      text-align: center;
+      margin: 20px auto;
+    }
+
+    #taskInput {
+      width: 50%;
+      padding: 10px;
+      font-size: 16px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+
+    .add-btn, .theme-btn {
+      padding: 10px 15px;
+      height: 42px;
+      line-height: 20px;
+      border: none;
+      border-radius: 5px;
+      margin-left: 10px;
+      background-color: #4A90E2;
+      color: white;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    ul {
+      list-style-type: none;
+      padding: 0;
+      max-width: 800px;
+      margin: auto;
+    }
+
+    .task {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 15px;
+      border-bottom: 1px solid #ccc;
+      font-size: 18px;
+    }
+
+    .task .left {
+      display: flex;
+      align-items: center;
+      flex: 1;
+    }
+
+    .task input[type="checkbox"] {
+      transform: scale(1.2);
+      margin-right: 10px;
+    }
+
+    .completed span {
+      text-decoration: line-through;
+      opacity: 0.6;
+    }
+
+    .timestamp {
+      font-size: 12px;
+      color: gray;
+      white-space: nowrap;
+      margin-left: 20px;
+    }
+
+    .delete-btn {
+      background: none;
+      border: none;
+      font-size: 20px;
+      cursor: pointer;
+      color: gray;
+      margin-left: 10px;
+    }
+
+    .delete-btn:hover {
+      color: red;
+    }
+  </style>
+</head>
+<body class="light">
+  <h1>Todo List</h1>
+
+  <div class="input-container">
+    <input id="taskInput" type="text" placeholder="What needs to be done?" />
+    <button class="add-btn" onclick="addTask()">Add</button>
+    <button class="theme-btn" onclick="toggleTheme()">切换主题</button>
+  </div>
+
+  <ul id="taskList"></ul>
+
+  <script>
+    const taskInput = document.getElementById('taskInput');
+    const taskList = document.getElementById('taskList');
+
+    taskInput.addEventListener('keypress', function (e) {
+      if (e.key === 'Enter') addTask();
+    });
+
+    function addTask() {
+      const taskName = taskInput.value.trim();
+      if (!taskName) return;
+
+      const now = new Date();
+      const timestamp = `${now.getFullYear()}年${now.getMonth() + 1}月${now.getDate()}日 ${now.toLocaleTimeString('zh-CN', { hour12: false })}`;
+
+      const li = document.createElement('li');
+      li.className = 'task';
+
+      const left = document.createElement('div');
+      left.className = 'left';
+
+      const checkbox = document.createElement('input');
+      checkbox.type = 'checkbox';
+      checkbox.onchange = () => {
+        if (checkbox.checked) {
+          li.classList.add('completed');
+        } else {
+          li.classList.remove('completed');
+        }
+      };
+
+      const span = document.createElement('span');
+      span.textContent = taskName;
+
+      left.appendChild(checkbox);
+      left.appendChild(span);
+
+      const right = document.createElement('div');
+      right.style.display = 'flex';
+      right.style.alignItems = 'center';
+
+      const time = document.createElement('span');
+      time.className = 'timestamp';
+      time.textContent = timestamp;
+
+      const del = document.createElement('button');
+      del.className = 'delete-btn';
+      del.innerHTML = '🗑️';
+      del.onclick = () => li.remove();
+
+      right.appendChild(time);
+      right.appendChild(del);
+
+      li.appendChild(left);
+      li.appendChild(right);
+
+      taskList.appendChild(li);
+      taskInput.value = '';
+    }
+
+    function toggleTheme() {
+      document.body.classList.toggle('dark');
+      document.body.classList.toggle('light');
+    }
+  </script>
+</body>
+</html>

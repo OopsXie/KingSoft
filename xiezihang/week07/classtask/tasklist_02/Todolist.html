@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Todo List</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f9f9f9;
+      padding: 20px;
+      transition: background-color 0.3s;
+    }
+    body.dark {
+      background-color: #333;
+      color: white;
+    }
+    h1 {
+      text-align: center;
+      color: #4682B4;
+    }
+    .task-input {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+    input[type="text"] {
+      padding: 10px;
+      width: 60%;
+      font-size: 16px;
+    }
+    button {
+      padding: 10px;
+      margin-left: 10px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    ul {
+      list-style-type: none;
+      padding: 0;
+    }
+    li {
+      background: white;
+      margin: 10px 0;
+      padding: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-radius: 5px;
+    }
+    body.dark li {
+      background: #444;
+    }
+    .completed-text {
+      text-decoration: line-through;
+      color: grey;
+    }
+    .timestamp {
+      font-size: 12px;
+      color: gray;
+      margin-left: 10px;
+    }
+    .delete {
+      cursor: pointer;
+      color: red;
+      margin-left: 10px;
+    }
+    .task-left {
+      display: flex;
+      align-items: center;
+    }
+    .task-left input[type="checkbox"] {
+      margin-right: 10px;
+    }
+    .filter-nav {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .filter-nav a {
+      margin: 0 10px;
+      text-decoration: none;
+      color: #4682B4;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <h1>Todo List</h1>
+  <div class="task-input">
+    <input id="taskInput" type="text" placeholder="What needs to be done?" onkeypress="if(event.key === 'Enter') addTask()">
+    <button onclick="addTask()">添加</button>
+    <button onclick="toggleTheme()">切换主题</button>
+  </div>
+  <div class="filter-nav">
+    <a href="#/all" onclick="setFilter('all')">所有</a>
+    <a href="#/done" onclick="setFilter('done')">已完成</a>
+    <a href="#/undone" onclick="setFilter('undone')">未完成</a>
+  </div>
+  <ul id="taskList"></ul>
+
+  <script>
+    const taskInput = document.getElementById('taskInput');
+    const taskList = document.getElementById('taskList');
+    const themeKey = 'todo-theme';
+    const taskKey = 'todo-tasks';
+    const filterKey = 'todo-filter';
+
+    document.body.classList.toggle('dark', localStorage.getItem(themeKey) === 'dark');
+    let tasks = JSON.parse(localStorage.getItem(taskKey)) || [];
+    let currentFilter = localStorage.getItem(filterKey) || 'all';
+
+    function renderTasks() {
+      taskList.innerHTML = '';
+      const filtered = tasks.filter(task => {
+        if (currentFilter === 'done') return task.completed;
+        if (currentFilter === 'undone') return !task.completed;
+        return true;
+      });
+      filtered.forEach((task, index) => {
+        const li = document.createElement('li');
+        const checked = task.completed ? 'checked' : '';
+        const textClass = task.completed ? 'completed-text' : '';
+        li.innerHTML = `
+          <div class="task-left">
+            <input type="checkbox" onchange="toggleComplete(${index})" ${checked}>
+            <span class="${textClass}">${task.text}</span>
+          </div>
+          <div>
+            <span class="timestamp">${task.time}</span>
+            <span class="delete" onclick="deleteTask(${index})">&#128465;</span>
+          </div>
+        `;
+        taskList.appendChild(li);
+      });
+    }
+
+    function addTask() {
+      const text = taskInput.value.trim();
+      if (!text) return;
+      const now = new Date();
+      tasks.push({ text, completed: false, time: now.toLocaleString() });
+      taskInput.value = '';
+      saveTasks();
+    }
+
+    function toggleComplete(index) {
+      tasks[index].completed = !tasks[index].completed;
+      saveTasks();
+    }
+
+    function deleteTask(index) {
+      tasks.splice(index, 1);
+      saveTasks();
+    }
+
+    function toggleTheme() {
+      document.body.classList.toggle('dark');
+      localStorage.setItem(themeKey, document.body.classList.contains('dark') ? 'dark' : 'light');
+    }
+
+    function setFilter(filter) {
+      currentFilter = filter;
+      localStorage.setItem(filterKey, filter);
+      renderTasks();
+    }
+
+    function saveTasks() {
+      localStorage.setItem(taskKey, JSON.stringify(tasks));
+      renderTasks();
+    }
+
+    window.addEventListener('load', () => {
+      const hash = window.location.hash;
+      if (hash.includes('/done')) setFilter('done');
+      else if (hash.includes('/undone')) setFilter('undone');
+      else setFilter('all');
+    });
+
+    renderTasks();
+  </script>
+</body>
+</html>
